@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 50%; margin: 0 auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Leaderboard</h1>
+    <table id="leaderboard">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Scores will be injected here -->
+        </tbody>
+    </table>
+    <script>
+        async function fetchLeaderboard() {
+            const response = await fetch('/leaderboard');
+            const data = await response.json();
+            const tableBody = document.querySelector('#leaderboard tbody');
+            tableBody.innerHTML = '';
+            data.forEach(([name, score]) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${name}</td><td>${score}</td>`;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Fetch leaderboard data on page load
+        window.onload = fetchLeaderboard;
+    </script>
+</body>
+</html>
